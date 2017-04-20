@@ -10,10 +10,9 @@ nCases = mid.nCases;
 % h = prod(mid.sMaps{n-1}) * mid.nMaps(n-1);
 % v = cnn.layers{n}.layerSet(1);
 
-nfc = size(cnn.layers{n}.layerSet, 2);
 lastdim = prod(size(mid.fMaps{n-1})) / nCases;
 
-for l = 1 : nfc
+for l = 1 : cnn.fsize
     lidx = n + l - 1;
     mid.z{lidx} = cnn.fcw{l} * reshape(mid.fMaps{lidx-1}, lastdim, nCases) + repmat(cnn.fcb{l},1,nCases);
     mid.fMaps{lidx} = active(mid.z{lidx}, cnn.layers{n}.function);

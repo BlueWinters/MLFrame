@@ -58,27 +58,4 @@ for n = (cnn.size-1) : -1 : 2
     end
 end
 
-
-
-% 输出层
-cfg = nn.layerCfg{n-1};
-nn.delta{n} = - nn.error .* activeGrads(nn.act{n}, cfg.actFunc);
-
-% 中间隐层
-for i = (n-1) : -1 : 2
-    cfg = nn.layerCfg{i};
-    nn.delta{i} = (nn.w{i}' * nn.delta{i+1}) .* activeGrads(nn.act{i}, cfg.actFunc);
-    
-    if(cfg.dropout > 0)
-        nn.delta{i} = nn.delta{i} .* nn.dropOutMask{i};
-    end
-end
-
-% 使用残差求梯度
-for i = 1 : (n-1)
-    nn.wDiff{i} = nn.delta{i+1} * nn.act{i}' / size(nn.delta{i},2);
-    nn.bDiff{i} = nn.delta{i+1} / size(nn.delta{i},2);
-end
-
-
 end

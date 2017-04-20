@@ -12,7 +12,7 @@ assert(isfield(cnn.layers{1}, 'type') ...
     && strcmp(cnn.layers{1}.type, 'input'), ...
     'Architecture 1 error.');
 
-% 输入的map数量
+% 中级变量，输入输出的map数量
 inputMaps = mapNums;
 outputMaps = 0;
 
@@ -42,6 +42,7 @@ for l = 2 : (n-1)
         end
         
         % 更替
+%         cnn.nmaps = outputMaps;
         inputMaps = outputMaps;
     end
     
