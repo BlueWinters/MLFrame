@@ -8,9 +8,6 @@ mapSize = [size(x,1) size(x,2)]; % width * height
 mapNums = size(x,3); % channels
 nCases = size(x,4); % cases
 
-assert(isfield(cnn.layers{1}, 'type') ...
-    && strcmp(cnn.layers{1}.type, 'input'), ...
-    'Architecture 1 error.');
 
 % 中级变量，输入输出的map数量
 inputMaps = mapNums;
@@ -64,9 +61,6 @@ for l = 2 : (n-1)
 end
 
 % 最后一层必须是全连接层
-assert(strcmp(cnn.layers{n}.type, 'fc'), ...
-    'error: last layer must be full connect')
-
 cnn.fsize = size(cnn.layers{n}.layerSet, 2);
 v = prod(mapSize) * inputMaps;
 h = cnn.layers{n}.layerSet(1);

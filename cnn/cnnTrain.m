@@ -40,6 +40,8 @@ for i = 1 : numEpochs
     cnnVisualKernel(cnn, mid);
 	subplot(2,2,3);
     cnnVisualfMaps(cnn, mid)
+    subplot(2,2,4);
+    cnnVisualColorKernel(cnn, mid);
 
 	disp(['epoch ' num2str(i) '/' num2str(numEpochs) '. '...
         'time ' num2str(time) ' seconds. ' ...
@@ -47,7 +49,6 @@ for i = 1 : numEpochs
 end
 
 end
-
 
 function cnnVisualKernel(cnn, mid)
 n = 2;%cnn.size - 1;
@@ -63,6 +64,21 @@ for i = 1 : imapsnum
     end
 end
 display_network(image);
+end
+
+function cnnVisualColorKernel(cnn, mid)
+n = 2;%cnn.size - 1;
+ksize = cnn.layers{n}.kernelSize;
+imapsnum = mid.nMaps(n-1);%3
+omapsnum = mid.nMaps(n);
+image = zeros([ksize 3 omapsnum]); 
+
+for i = 1 : omapsnum
+    for j = 1 : imapsnum
+        image(:,:,j,i) = reshape(cnn.kernel{n}{i,j}(:),ksize);
+    end
+end
+visual(image*255,[6 6]);
 end
 
 function cnnVisualfMaps(cnn, mid)
