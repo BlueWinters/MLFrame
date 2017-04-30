@@ -40,8 +40,8 @@ for i = 1 : numEpochs
     cnnVisualKernel(cnn, mid);
 	subplot(2,2,3);
     cnnVisualfMaps(cnn, mid)
-    subplot(2,2,4);
-    cnnVisualColorKernel(cnn, mid);
+%     subplot(2,2,4);
+%     cnnVisualColorKernel(cnn, mid);
 
 	disp(['epoch ' num2str(i) '/' num2str(numEpochs) '. '...
         'time ' num2str(time) ' seconds. ' ...
