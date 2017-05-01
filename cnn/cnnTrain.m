@@ -20,8 +20,8 @@ for i = 1 : numEpochs
         xBatch = x(:, :, :, index((idx - 1) * batchSize + 1 : idx * batchSize));
         yBatch = y(:, index((idx - 1) * batchSize + 1 : idx * batchSize));
         
-        mid = cnnFeedforward(cnn, xBatch, yBatch);
-        mid = cnnBackpropagate(cnn, mid);
+        mid = cnnForwardPropagate(cnn, xBatch, yBatch);
+        mid = cnnBackPropagate(cnn, mid);
         cnn = cnnUpdateGrads(cnn, opt, mid);
         
         loss(iter) = mid.loss;

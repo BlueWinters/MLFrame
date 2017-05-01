@@ -1,4 +1,4 @@
-function mid = cnnConvolution(cnn, mid)
+function mid = cnnFpConvolution(cnn, mid)
 
 % µ±Ç°²ãÊý
 n = mid.n;

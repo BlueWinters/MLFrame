@@ -1,4 +1,4 @@
-function mid = cnnActivation(cnn, mid)
+function mid = cnnFpActivation(cnn, mid)
 
 % µ±Ç°²ãÊý
 n = mid.n;

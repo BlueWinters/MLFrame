@@ -1,4 +1,4 @@
-function mid = cnnPooling(cnn, mid)
+function mid = cnnFpPooling(cnn, mid)
 
 % µ±Ç°²ãÊı
 n = mid.n;

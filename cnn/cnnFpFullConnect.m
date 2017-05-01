@@ -1,4 +1,4 @@
-function mid = cnnFullConnect(cnn, mid)
+function mid = cnnFpFullConnect(cnn, mid)
 
 % µ±Ç°²ãÊý
 n = mid.n;

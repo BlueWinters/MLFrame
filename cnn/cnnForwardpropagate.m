@@ -21,15 +21,15 @@ for n = 2 : (cnn.size-1)
     
     % ¾í»ý²ã
     if strcmp(cnn.layers{n}.type, 'conv')
-        mid = cnnConvolution(cnn, mid);
+        mid = cnnFpConvolution(cnn, mid);
     end
     % ¼¤»î²ã
     if strcmp(cnn.layers{n}.type, 'act')
-        mid = cnnActivation(cnn, mid);
+        mid = cnnFpActivation(cnn, mid);
     end   
     % ³Ø»¯²ã
     if strcmp(cnn.layers{n}.type, 'pool')
-        mid = cnnPooling(cnn, mid);
+        mid = cnnFpPooling(cnn, mid);
     end
 end
 
@@ -38,7 +38,7 @@ end
 mid.n = cnn.size;
 assert(strcmp(cnn.layers{cnn.size}.type, 'fc'), ...
     'error: last layer must be full connect')
-mid = cnnFullConnect(cnn, mid);
+mid = cnnFpFullConnect(cnn, mid);
 
 
 mid.error = y - mid.fMaps{end};
