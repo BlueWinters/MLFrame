@@ -1,4 +1,4 @@
-function mid = cnnBackpropagate(cnn, mid)
+function mid = cnnBackPropagate(cnn, mid)
 
 % feature mapµÄ²Ð²î
 mid.dfMaps = cell(cnn.size + cnn.fsize - 1,1);

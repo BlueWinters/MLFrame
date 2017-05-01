@@ -1,4 +1,4 @@
-function mid = cnnFeedforward(cnn, x, y)
+function mid = cnnForwardPropagate(cnn, x, y)
 
 % ÑµÁ·Ñù±¾Êý
 mid.nCases = size(x,4);
