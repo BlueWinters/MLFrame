@@ -4,11 +4,12 @@ cnn.layers = {
     struct('type', 'input', 'inputSize', [28 28], 'inputChls', 1)
     struct('type', 'conv', 'kernelSize', [3 3], 'kernelNums', 9)
     struct('type', 'act', 'function', 'ReLU')
-    struct('type', 'conv', 'kernelSize', [3 3], 'kernelNums', 9)
-    struct('type', 'act', 'function', 'ReLU')
-    struct('type', 'pool', 'scaleSize', [2 2], 'scaleType', 'Max')
-    struct('type', 'conv', 'kernelSize', [5 5], 'kernelNums', 9)
-    struct('type', 'act', 'function', 'ReLU')
+    struct('type', 'sparse', 'k', 0.5)
+%     struct('type', 'conv', 'kernelSize', [3 3], 'kernelNums', 9)
+%     struct('type', 'act', 'function', 'ReLU')
+%     struct('type', 'pool', 'scaleSize', [2 2], 'scaleType', 'Max')
+%     struct('type', 'conv', 'kernelSize', [5 5], 'kernelNums', 9)
+%     struct('type', 'act', 'function', 'ReLU')
     struct('type', 'fc', 'layerSet', [100 10], 'function', 'Sigmoid')
 };
 cnn.size = numel(cnn.layers);
@@ -23,7 +24,7 @@ opt.numEpochs = 400;
 [x, y, tx, ty] = loadMnist4();
 
 %% —µ¡∑
-cnn = cnnCheckConfig(cnn, opt, x, y);
+% cnn = cnnCheckConfig(cnn, opt, x, y);
 cnn = cnnTrain(cnn, opt, x, y);
 
 %% ≤‚ ‘

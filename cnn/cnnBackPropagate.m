@@ -56,6 +56,10 @@ for n = (cnn.size-1) : -1 : 2
     if strcmp(cnn.layers{n}.type, 'pool')
         mid = cnnBpPooling(cnn, mid);
     end
+    %
+    if strcmp(cnn.layers{n}.type, 'sparse')
+        mid = cnnBpKsparse(cnn, mid);
+    end
 end
 
 end
