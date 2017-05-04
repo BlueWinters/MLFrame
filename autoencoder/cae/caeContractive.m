@@ -1,4 +1,4 @@
-function mid = caeContractive(ae, x, y)
+function mid = caeContractive(ae, mid, x, y)
 
 nCases = size(x, 2);
 mid.a1 = x;

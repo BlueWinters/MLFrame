@@ -1,4 +1,4 @@
-function ae = caeTrain(ae, opt, x, y)
+function cae = caeTrain(cae, opt, x, y)
 
 % 临时变量
 nCases = size(x, 2);
@@ -10,11 +10,12 @@ loss = zeros(numEpochs*numBatches, 1);
 mloss = zeros(numEpochs, 1);
 jacobi = zeros(numEpochs*numBatches, 1);
 mjacobi = zeros(numEpochs, 1);
-
 iter = 1;
 
 % 初始化权值
-ae = aeInitParameters(ae);
+cae = aeInitParameters(cae);
+% 初始化中间变量
+mid = adInitMidMt(cae);
 
 for i = 1 : numEpochs
     tic;
@@ -25,9 +26,9 @@ for i = 1 : numEpochs
         yBatch = y(:, index((idx - 1) * batchSize + 1 : idx * batchSize));
         
         % 损失函数计算
-        mid = ae.function(ae, xBatch, yBatch);
+        mid = caeContractive(cae, mid, xBatch, yBatch);
         % 梯度下降优化参数
-        ae = opt.optMethod(ae, opt, mid);
+        [cae, mid] = aeSgdMomentum(cae, opt, mid);
         
         loss(iter) = mid.loss;
         jacobi(iter) = mid.jacobi;
@@ -40,9 +41,9 @@ for i = 1 : numEpochs
     mjacobi(i) = mean(jacobi((iter-numBatches):(iter-1)));
     
     subplot(2,2,1);
-    display_network(ae.w1');
+    display_network(cae.w1');
     subplot(2,2,2);
-    display_network(ae.w2);
+    display_network(cae.w2);
    
     subplot(2,2,3);
     plot([1:i],mloss(1:i), 'b');
@@ -56,4 +57,12 @@ for i = 1 : numEpochs
         'mean squared error ' num2str(mloss(i)) '.']);
 end
 
+end
+
+%%
+function mid = adInitMidMt(ae)
+mid.vw1 = zeros(size(ae.w1));
+mid.vw2 = zeros(size(ae.w2));
+mid.vb1 = zeros(size(ae.b1));
+mid.vb2 = zeros(size(ae.b2));
 end

@@ -12,6 +12,8 @@ iter = 1;
 
 % 初始化权值
 ae = aeInitParameters(ae);
+% 初始化中间变量
+mid = adInitMidMt(ae);
 
 for i = 1 : numEpochs
     tic;
@@ -22,9 +24,9 @@ for i = 1 : numEpochs
         yBatch = y(:, index((idx - 1) * batchSize + 1 : idx * batchSize));
         
         % 损失函数计算
-        mid = ae.function(ae, xBatch, yBatch);
+        mid = aeBasic(ae, mid, xBatch, yBatch);
         % 梯度下降优化参数
-        ae = opt.optMethod(ae, opt, mid);
+        [ae, mid] = aeSgdMomentum(ae, opt, mid);
         
         loss(iter) = mid.loss;
         iter = iter + 1;
@@ -34,16 +36,25 @@ for i = 1 : numEpochs
     
     mloss(i) = mean(loss((iter-numBatches):(iter-1)));
     
-    subplot(1,3,1);
+    subplot(2,2,1);
     display_network(ae.w1');
-    subplot(1,3,2);
+    subplot(2,2,2);
     display_network(ae.w2);
-    subplot(1,3,3);
+    subplot(2,2,3);
     plot([1:i],mloss(1:i));
+    axis([0 numEpochs 0 ceil(max(mloss))]);
     
 	disp(['epoch ' num2str(i) '/' num2str(numEpochs) '. '...
         'time ' num2str(time) ' seconds. ' ...
         'mean squared error ' num2str(mloss(i)) '.']);
 end
 
+end
+
+%%
+function mid = adInitMidMt(ae)
+mid.vw1 = zeros(size(ae.w1));
+mid.vw2 = zeros(size(ae.w2));
+mid.vb1 = zeros(size(ae.b1));
+mid.vb2 = zeros(size(ae.b2));
 end

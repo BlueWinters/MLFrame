@@ -1,27 +1,21 @@
 %% 网络配置
-saeCfg.architecture = [784 100];
+cae.visible = 784;
+cae.hidden = 100;
+cae.tied = 1;
+cae.encoder = 'Sigmoid';
+cae.decoder = 'Sigmoid';
+cae.lambda = 0.01;
+cae.weightdecay = 0.01;
 
 %% 优化方法
-opt.optMethod = @aeSgdMomentum;
 opt.momentum = 0.9;
 opt.learnRate = 0.05;
 opt.batchSize = 20;
 opt.numEpochs = 400;
 
-%% 网络逐层的配置
-saeCfg.size = size(saeCfg.architecture,2);
-saeCfg.layerCfg = cell(saeCfg.size-1,1);
-
-saeCfg.layerCfg{2}.tied = 0;
-saeCfg.layerCfg{2}.function = @aeContractive;
-saeCfg.layerCfg{2}.lambda = 0.01;
-saeCfg.layerCfg{2}.weightdecay = 0.01;
-saeCfg.layerCfg{2}.encoder = 'Sigmoid';
-saeCfg.layerCfg{2}.decoder = 'Linear';
-
 %% 数据
-data = loadMNIST();
+[x, y, ~, ~] = loadMnist2();
 
 %% 训练
-sae = saeTrain(saeCfg, opt, data.xTrain, data.yTrain);
+cae = caeTrain(cae, opt, x, y);
 
