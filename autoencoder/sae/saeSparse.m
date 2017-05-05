@@ -1,4 +1,4 @@
-function mid = saeSparse(ae, x, y)
+function mid = saeSparse(ae, mid, x, y)
 
 nCases = size(x, 2);
 mid.a1 = x;

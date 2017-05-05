@@ -1,4 +1,4 @@
-function mid = saeKSparse(ae, x, y)
+function mid = saeKSparse(ae, mid, x, y)
 
 nCases = size(x, 2);
 mid.a1 = x;

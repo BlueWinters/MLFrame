@@ -7,8 +7,8 @@ ae.decoder = 'Sigmoid';
 
 %% 优化参数
 opt.momentum = 0.9;
-opt.learnRate = 0.1;
-opt.batchSize = 20;
+opt.learnRate = 0.05;
+opt.batchSize = 16;
 opt.numEpochs = 400;
 
 %% 数据

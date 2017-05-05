@@ -4,8 +4,8 @@ cae.hidden = 100;
 cae.tied = 1;
 cae.encoder = 'Sigmoid';
 cae.decoder = 'Sigmoid';
-cae.lambda = 0.01;
-cae.weightdecay = 0.01;
+cae.lambda = 0.0001;
+cae.weightdecay = 0.00;
 
 %% 优化方法
 opt.momentum = 0.9;
