@@ -1,4 +1,4 @@
-function mid = daeDenoise(ae, x, nx, y)
+function mid = daeDenoise(ae, mid, x, nx, y)
 
 nCases = size(x, 2);
 mid.a1 = nx;

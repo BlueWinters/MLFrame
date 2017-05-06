@@ -9,14 +9,15 @@ numBatches = floor(nCases / batchSize);
 % 用于统计的变量
 loss = zeros(numEpochs*numBatches, 1);
 mloss = zeros(numEpochs, 1);
+iter = 1;
 
 % 对输入添加扰动
 nx = daeMakeDenoise(dae, x);
 
-iter = 1;
-
 % 初始化权值
 dae = aeInitParameters(dae);
+% 初始化中间变量
+mid = aeInitMidMt(dae);
 
 for i = 1 : numEpochs
     tic;
@@ -28,9 +29,9 @@ for i = 1 : numEpochs
         yBatch = y(:, index((idx - 1) * batchSize + 1 : idx * batchSize));
         
         % 损失函数计算
-        mid = dae.function(dae, xBatch, nxBatch, yBatch);
+        mid = daeDenoise(dae, mid, xBatch, nxBatch, yBatch);
         % 梯度下降优化参数
-        dae = opt.optMethod(dae, opt, mid);
+        dae = aeSgdMomentum(dae, opt, mid);
         
         loss(iter) = mid.loss;
         iter = iter + 1;
@@ -41,8 +42,10 @@ for i = 1 : numEpochs
     mloss(i) = mean(loss((iter-numBatches):(iter-1)));
     
     subplot(2,2,1);
+%     visual2(dae.w1',[10 10]);
     display_network(dae.w1');
     subplot(2,2,2);
+%     visual2(dae.w2,[10 10]);
     display_network(dae.w2);
    
     subplot(2,2,3);
@@ -54,4 +57,12 @@ for i = 1 : numEpochs
         'mean squared error ' num2str(mloss(i)) '.']);
 end
 
+end
+
+%%
+function mid = aeInitMidMt(ae)
+mid.vw1 = zeros(size(ae.w1));
+mid.vw2 = zeros(size(ae.w2));
+mid.vb1 = zeros(size(ae.b1));
+mid.vb2 = zeros(size(ae.b2));
 end

@@ -1,6 +1,6 @@
 function group = sgaeInitGroups(ae)
 
-hsize = ae.h;
+hsize = ae.hidden;
 gsize = ae.gsize;
 
 % ÊäÈëÌõ¼şÅĞ¶Ï

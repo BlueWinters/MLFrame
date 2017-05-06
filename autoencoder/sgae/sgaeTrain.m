@@ -17,6 +17,8 @@ iter = 1;
 sgae = aeInitParameters(sgae);
 % 初始化组信息
 group = sgaeInitGroups(sgae);
+% 初始化中间变量
+mid = aeInitMidMt(sgae);
 
 for i = 1 : numEpochs
     tic;
@@ -27,9 +29,9 @@ for i = 1 : numEpochs
         yBatch = y(:, index((idx - 1) * batchSize + 1 : idx * batchSize));
         
         % 损失函数计算
-        mid = sgae.function(sgae, group, xBatch, yBatch);
+        mid = sgae.function(sgae, group, mid, xBatch, yBatch);
         % 梯度下降优化参数
-        sgae = opt.optMethod(sgae, opt, mid);
+        sgae = aeSgdMomentum(sgae, opt, mid);
         
         loss(iter) = mid.loss;
         gloss(iter) = mid.gloss;
@@ -59,4 +61,12 @@ for i = 1 : numEpochs
         'group L2,1 ' num2str(mgloss(i)) '.']);
 end
 
+end
+
+%%
+function mid = aeInitMidMt(ae)
+mid.vw1 = zeros(size(ae.w1));
+mid.vw2 = zeros(size(ae.w2));
+mid.vb1 = zeros(size(ae.b1));
+mid.vb2 = zeros(size(ae.b2));
 end
