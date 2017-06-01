@@ -1,4 +1,4 @@
-function visual(input, order)
+function visual4(input, order)
 
 assert(numel(size(input)) == 4, 'error input format.');
 assert(numel(size(order)) == 2, 'error order.');
@@ -22,5 +22,5 @@ for n = 1 : cases
 end
 
 imshow(buffer);
-
+drawnow;
 end
