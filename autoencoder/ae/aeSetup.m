@@ -4,7 +4,8 @@ function ae = aeSetup(architecture)
 assert(size(architecture,1) == 1 && size(architecture,2) > 1, ...
     'network architecture error');
 
-ae.architecture = architecture;
+ae.visible = architecture(1);
+ae.hidden = architecture(2);
 ae.size = size(ae.architecture, 2);
 ae.layerCfg = cell(ae.size-1,1);
 

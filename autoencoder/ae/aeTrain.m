@@ -13,7 +13,7 @@ iter = 1;
 % 初始化权值
 ae = aeInitParameters(ae);
 % 初始化中间变量
-mid = adInitMidMt(ae);
+mid = aeInitMidMt(ae);
 
 for i = 1 : numEpochs
     tic;
@@ -52,7 +52,7 @@ end
 end
 
 %%
-function mid = adInitMidMt(ae)
+function mid = aeInitMidMt(ae)
 mid.vw1 = zeros(size(ae.w1));
 mid.vw2 = zeros(size(ae.w2));
 mid.vb1 = zeros(size(ae.b1));
