@@ -17,7 +17,8 @@ for n = 2 : dSize
 end
 
 % 准备生成样本的标签
-labels = repmat([0;1], 1, nCasesX);
+% 这里将伪样本“视作”真样本进行梯度下降
+labels = repmat([1;0], 1, nCasesX);
 
 % 计算生成网络部分的残差
 gmid.gerror = x - a3;
@@ -38,7 +39,7 @@ gmid.dRes{1} = aae.dw{1}'*gmid.dRes{2};
 
 % 计算总的残差
 delta3 = gmid.gRes3;
-delta2 = gmid.gRes2 + gmid.dRes{1} .* activeGrads(z2, aae.gEncoder);
+delta2 = gmid.gRes2 + 0.0001*gmid.dRes{1} .* activeGrads(z2, aae.gEncoder);
 
 % 计算权值梯度
 gmid.w1Diff = delta2 * x' / nCasesX;

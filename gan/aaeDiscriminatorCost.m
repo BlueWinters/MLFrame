@@ -14,7 +14,7 @@ a2 = active(z2, aae.gEncoder);
 dSize = numel(aae.dArchitecture);
 % 准备（正/负）样本
 dmid.a{1} = [a2 z];
-labels = [repmat([0;1], 1, nCasesZ) repmat([1;0], 1, nCasesX)];
+labels = [repmat([1;0], 1, nCasesZ) repmat([0;1], 1, nCasesX)];
 
 for n = 2 : dSize
     dmid.z{n} = aae.dw{n-1} * dmid.a{n-1} + repmat(aae.db{n-1}, 1, nCases);
